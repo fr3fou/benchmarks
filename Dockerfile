@@ -6,6 +6,7 @@ RUN wget -O /usr/local/bin/hey https://storage.googleapis.com/hey-releases/hey_l
     chmod +x /usr/local/bin/hey
 
 COPY package.json package-lock.json ./
+COPY vendor ./vendor
 RUN npm ci
 
 COPY . .
