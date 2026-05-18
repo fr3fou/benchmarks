@@ -1,6 +1,6 @@
 {
   "version": "1.1",
-  "timestamp": "2026-05-18T16:23:31.551Z",
+  "timestamp": "2026-05-18T17:52:10.593Z",
   "environment": {
     "node": "v22.22.3",
     "platform": "darwin",
@@ -15,320 +15,332 @@
       "provider": "northflank",
       "mode": "concurrent",
       "concurrency": 100,
-      "wallClockMs": 120068.91,
-      "timeToFirstReadyMs": 4893.76,
+      "wallClockMs": 30843.9,
+      "timeToFirstReadyMs": 3637.54,
       "iterations": [
         {
-          "ttiMs": 5834.69
+          "ttiMs": 5409.2
         },
         {
-          "ttiMs": 5512.3
+          "ttiMs": 5484.57
         },
         {
-          "ttiMs": 6644.89
+          "ttiMs": 4639.66
         },
         {
-          "ttiMs": 78205.52
+          "ttiMs": 3750.42
         },
         {
-          "ttiMs": 6581.73
-        },
-        {
-          "ttiMs": 5653.69
-        },
-        {
-          "ttiMs": 5857.55
-        },
-        {
-          "ttiMs": 7494.17
-        },
-        {
-          "ttiMs": 6859.33
-        },
-        {
-          "ttiMs": 5031.73
-        },
-        {
-          "ttiMs": 6799.91
-        },
-        {
-          "ttiMs": 6659.19
-        },
-        {
-          "ttiMs": 78968.35
-        },
-        {
-          "ttiMs": 14827.29
-        },
-        {
-          "ttiMs": 5641.14
-        },
-        {
-          "ttiMs": 83136.25
-        },
-        {
-          "ttiMs": 5037.82
-        },
-        {
-          "ttiMs": 7574.99
-        },
-        {
-          "ttiMs": 6636.26
-        },
-        {
-          "ttiMs": 6598.28
-        },
-        {
-          "ttiMs": 5657.28
-        },
-        {
-          "ttiMs": 6384.48
-        },
-        {
-          "ttiMs": 5355.54
-        },
-        {
-          "ttiMs": 8190.03
-        },
-        {
-          "ttiMs": 6326.14
-        },
-        {
-          "ttiMs": 6236.03
-        },
-        {
-          "ttiMs": 6403.66
-        },
-        {
-          "ttiMs": 6533.89
-        },
-        {
-          "ttiMs": 5573.04
-        },
-        {
-          "ttiMs": 4968.03
-        },
-        {
-          "ttiMs": 6219.44
-        },
-        {
-          "ttiMs": 4893.76
-        },
-        {
-          "ttiMs": 80779.52
-        },
-        {
-          "ttiMs": 79837.51
-        },
-        {
-          "ttiMs": 4978.83
-        },
-        {
-          "ttiMs": 5755.86
-        },
-        {
-          "ttiMs": 6507.49
-        },
-        {
-          "ttiMs": 6658.17
-        },
-        {
-          "ttiMs": 5742.26
-        },
-        {
-          "ttiMs": 6863.39
-        },
-        {
-          "ttiMs": 6332.41
-        },
-        {
-          "ttiMs": 8419.35
-        },
-        {
-          "ttiMs": 5767.22
-        },
-        {
-          "ttiMs": 5589.06
-        },
-        {
-          "ttiMs": 6320.56
-        },
-        {
-          "ttiMs": 6336.91
-        },
-        {
-          "ttiMs": 6404.96
-        },
-        {
-          "ttiMs": 5789.67
-        },
-        {
-          "ttiMs": 6631.34
-        },
-        {
-          "ttiMs": 6378.81
-        },
-        {
-          "ttiMs": 5653.9
-        },
-        {
-          "ttiMs": 5654.85
-        },
-        {
-          "ttiMs": 5826.99
-        },
-        {
-          "ttiMs": 6449.82
-        },
-        {
-          "ttiMs": 79942.91
-        },
-        {
-          "ttiMs": 5661.5
-        },
-        {
-          "ttiMs": 5139.8
-        },
-        {
-          "ttiMs": 6269.48
-        },
-        {
-          "ttiMs": 6115.1
-        },
-        {
-          "ttiMs": 6008.77
-        },
-        {
-          "ttiMs": 5937.38
-        },
-        {
-          "ttiMs": 5640.47
-        },
-        {
-          "ttiMs": 6702.28
-        },
-        {
-          "ttiMs": 5940.64
-        },
-        {
-          "ttiMs": 6257.45
-        },
-        {
-          "ttiMs": 14827.25
-        },
-        {
-          "ttiMs": 7534.35
+          "ttiMs": 6167.8
         },
         {
           "ttiMs": 0,
-          "error": "Sandbox creation timed out"
+          "error": "Sandbox identity check timed out"
         },
         {
-          "ttiMs": 80916.42
+          "ttiMs": 4788.55
         },
         {
-          "ttiMs": 6656.62
+          "ttiMs": 5286.75
         },
         {
-          "ttiMs": 6280.1
+          "ttiMs": 6056.29
         },
         {
-          "ttiMs": 6914.25
+          "ttiMs": 4565.33
         },
         {
-          "ttiMs": 6327.35
+          "ttiMs": 5476.34
         },
         {
-          "ttiMs": 6038.98
+          "ttiMs": 5048.18
         },
         {
-          "ttiMs": 6799.4
+          "ttiMs": 6504.44
         },
         {
-          "ttiMs": 14804.16
+          "ttiMs": 5891.99
         },
         {
-          "ttiMs": 5707.83
+          "ttiMs": 5100.37
         },
         {
-          "ttiMs": 6548.24
+          "ttiMs": 5523.57
         },
         {
-          "ttiMs": 6644.63
+          "ttiMs": 4932.22
         },
         {
-          "ttiMs": 6348.65
+          "ttiMs": 5903.16
         },
         {
-          "ttiMs": 6187.97
+          "ttiMs": 4950.04
         },
         {
-          "ttiMs": 6408.61
+          "ttiMs": 0,
+          "error": "Sandbox/container reuse detected: persistent marker at /tmp/.bench_ephemeral_check"
         },
         {
-          "ttiMs": 6303.77
+          "ttiMs": 5928.25
         },
         {
-          "ttiMs": 6415.24
+          "ttiMs": 4572.21
         },
         {
-          "ttiMs": 7391.86
+          "ttiMs": 7222.5
         },
         {
-          "ttiMs": 6493.96
+          "ttiMs": 9617.87
         },
         {
-          "ttiMs": 7196.06
+          "ttiMs": 5795.63
         },
         {
-          "ttiMs": 6775.21
+          "ttiMs": 5544.28
         },
         {
-          "ttiMs": 6652.8
+          "ttiMs": 5799.54
         },
         {
-          "ttiMs": 6278.7
+          "ttiMs": 5242.92
         },
         {
-          "ttiMs": 5699.7
+          "ttiMs": 3677.09
         },
         {
-          "ttiMs": 6457.93
+          "ttiMs": 4714.3
         },
         {
-          "ttiMs": 6597.56
+          "ttiMs": 5096.6
         },
         {
-          "ttiMs": 6766.58
+          "ttiMs": 5705.1
         },
         {
-          "ttiMs": 5837.02
+          "ttiMs": 4419.26
         },
         {
-          "ttiMs": 5902.13
+          "ttiMs": 5345.13
         },
         {
-          "ttiMs": 8124.38
+          "ttiMs": 0,
+          "error": "Sandbox identity check timed out"
         },
         {
-          "ttiMs": 7207.33
+          "ttiMs": 7775.6
         },
         {
-          "ttiMs": 6530.17
+          "ttiMs": 4070.45
         },
         {
-          "ttiMs": 6399.81
+          "ttiMs": 5333.79
+        },
+        {
+          "ttiMs": 7988.17
+        },
+        {
+          "ttiMs": 5520.72
+        },
+        {
+          "ttiMs": 5157.26
+        },
+        {
+          "ttiMs": 8261.29
+        },
+        {
+          "ttiMs": 4903.05
+        },
+        {
+          "ttiMs": 3637.54
+        },
+        {
+          "ttiMs": 4725.76
+        },
+        {
+          "ttiMs": 4904.57
+        },
+        {
+          "ttiMs": 6064.07
+        },
+        {
+          "ttiMs": 4721.71
+        },
+        {
+          "ttiMs": 5509.56
+        },
+        {
+          "ttiMs": 5131.43
+        },
+        {
+          "ttiMs": 7135.23
+        },
+        {
+          "ttiMs": 5971.78
+        },
+        {
+          "ttiMs": 6012.24
+        },
+        {
+          "ttiMs": 5145.27
+        },
+        {
+          "ttiMs": 5179.62
+        },
+        {
+          "ttiMs": 4937.55
+        },
+        {
+          "ttiMs": 5419.45
+        },
+        {
+          "ttiMs": 9370.05
+        },
+        {
+          "ttiMs": 5478.47
+        },
+        {
+          "ttiMs": 5614.1
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox identity check timed out"
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox identity check timed out"
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox identity check timed out"
+        },
+        {
+          "ttiMs": 5977.05
+        },
+        {
+          "ttiMs": 4727.93
+        },
+        {
+          "ttiMs": 5924.77
+        },
+        {
+          "ttiMs": 5198.67
+        },
+        {
+          "ttiMs": 9215.93
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox/container reuse detected: persistent marker at /tmp/.bench_ephemeral_check"
+        },
+        {
+          "ttiMs": 5112.51
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox identity check timed out"
+        },
+        {
+          "ttiMs": 8713.15
+        },
+        {
+          "ttiMs": 5913.57
+        },
+        {
+          "ttiMs": 5149.99
+        },
+        {
+          "ttiMs": 5660.11
+        },
+        {
+          "ttiMs": 5183.41
+        },
+        {
+          "ttiMs": 5142.4
+        },
+        {
+          "ttiMs": 4707.67
+        },
+        {
+          "ttiMs": 4820.01
+        },
+        {
+          "ttiMs": 8869.67
+        },
+        {
+          "ttiMs": 5056.84
+        },
+        {
+          "ttiMs": 4780.71
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox/container reuse detected: persistent marker at /tmp/.bench_ephemeral_check"
+        },
+        {
+          "ttiMs": 4995.4
+        },
+        {
+          "ttiMs": 5010.54
+        },
+        {
+          "ttiMs": 4895.13
+        },
+        {
+          "ttiMs": 4823.63
+        },
+        {
+          "ttiMs": 4650.62
+        },
+        {
+          "ttiMs": 4778.44
+        },
+        {
+          "ttiMs": 3962.01
+        },
+        {
+          "ttiMs": 5323.4
+        },
+        {
+          "ttiMs": 6022.98
+        },
+        {
+          "ttiMs": 4946.92
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox identity check timed out"
+        },
+        {
+          "ttiMs": 4511.1
+        },
+        {
+          "ttiMs": 7356.5
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox identity check timed out"
+        },
+        {
+          "ttiMs": 6331.56
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox/container reuse detected: persistent marker at /tmp/.bench_ephemeral_check"
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox identity check timed out"
         }
       ],
       "summary": {
         "ttiMs": {
-          "median": 6399.81,
-          "p95": 14827.25,
-          "p99": 79837.51
+          "median": 5242.92,
+          "p95": 7775.6,
+          "p99": 8713.15
         }
       },
-      "compositeScore": 21.39,
-      "successRate": 0.99
+      "compositeScore": 31.35,
+      "successRate": 0.87
     }
   ]
 }
