@@ -192,7 +192,7 @@ export async function runIteration(
 
     return { ttiMs };
   } finally {
-    if (sandbox) {
+    if (sandbox && process.env.DELETE !== 'false') {
       let timer: ReturnType<typeof setTimeout> | undefined;
       try {
         await Promise.race([
@@ -206,6 +206,8 @@ export async function runIteration(
       } finally {
         if (timer) clearTimeout(timer);
       }
+    } else if (sandbox && process.env.DELETE === 'false') {
+      console.warn(`    [cleanup] DELETE=false → leaking sandbox ${(sandbox as any).sandboxId ?? '<unknown>'}`);
     }
   }
 }
