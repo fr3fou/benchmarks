@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": "1.0",
-    "last_updated": "2026-03-16",
+    "last_updated": "2026-05-18",
     "normalization_basis": "1 vCPU + 2 GB RAM / hour",
     "notes": "Rates sourced from official pricing pages. Confidence field indicates data quality: exact = from official pricing page, estimated = back-calculated from bundled tier, unknown = not published."
   },
@@ -300,6 +300,77 @@
       "free_credits": null,
       "isolation": "vm",
       "notes": "Primarily a CI/CD runner platform, not a pure AI sandbox. macOS on Apple M4 Pro available. SOC2 Type II."
+    },
+    {
+      "id": "northflank",
+      "benchmark": {
+        "score": null,
+        "success_rate": "0/0",
+        "status": "pending",
+        "cold_start_ms": null
+      },
+      "pricing": {
+        "model": "per_second",
+        "cpu": {
+          "rate": 0.01667,
+          "unit": "vCPU-hr",
+          "confidence": "exact",
+          "notes": "Northflank compute pricing lists CPU at $0.01667/vCPU/hr with usage billed down to the second."
+        },
+        "memory": {
+          "rate": 0.00833,
+          "unit": "GB-hr",
+          "bundled_with_cpu": false,
+          "confidence": "exact",
+          "notes": "Northflank compute pricing lists memory at $0.00833/GB/hr."
+        },
+        "storage": {
+          "disk_rate": 0.15,
+          "disk_unit": "GB-month",
+          "builds_backups_rate": 0.08,
+          "builds_backups_unit": "GB-month",
+          "confidence": "exact"
+        },
+        "egress": {
+          "rate": 0.06,
+          "unit": "GB",
+          "free_gb_per_month": null,
+          "confidence": "exact",
+          "notes": "Network ingress is free; cross-zone transfer with zonal redundancy is $0.02/GB."
+        },
+        "normalized": {
+          "cpu_per_vcpu_hr": 0.01667,
+          "memory_per_gib_hr": 0.00833,
+          "total_1vcpu_2gb_hr": 0.03333,
+          "confidence": "exact",
+          "notes": "1 vCPU x $0.01667/hr + 2 GB x $0.00833/hr. Equivalent to nf-compute-100-2 at $0.0333/hr."
+        }
+      },
+      "plans": [
+        {
+          "name": "sandbox",
+          "base_fee_per_month": 0,
+          "credits": null,
+          "requires_cc": false,
+          "notes": "Free account tier for testing and evaluation."
+        },
+        {
+          "name": "team",
+          "base_fee_per_month": 0,
+          "credits": null,
+          "requires_cc": true,
+          "notes": "Usage-based pricing starts at $0/month."
+        },
+        {
+          "name": "enterprise",
+          "base_fee_per_month": null,
+          "credits": null,
+          "requires_cc": true
+        }
+      ],
+      "free_credits": null,
+      "isolation": "kubernetes_container",
+      "notes": "Benchmark uses internal Northflank build-service images only, deployed as one-off services via @computesdk/northflank."
     },
     {
       "id": "vercel",
