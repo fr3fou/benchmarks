@@ -18,6 +18,10 @@ export interface ProviderConfig {
 export interface TimingResult {
   /** Total time from start to first successful code execution */
   ttiMs: number;
+  /** Time for just `compute.sandbox.create()` to return */
+  createMs?: number;
+  /** Time for the first `runCommand` call (identity probe — includes any readiness retries) */
+  firstExecMs?: number;
   /** Error message if this iteration failed */
   error?: string;
 }

@@ -1,5 +1,6 @@
-import type { BenchmarkResult, ConcurrentBenchmarkResult, StaggeredBenchmarkResult } from './types.js';
+import type { BenchmarkResult, ConcurrentBenchmarkResult, StaggeredBenchmarkResult, TimingResult } from './types.js';
 import { sortByCompositeScore } from './scoring.js';
+import { computeStats } from '../util/stats.js';
 
 function isConcurrent(r: BenchmarkResult): r is ConcurrentBenchmarkResult {
   return r.mode === 'concurrent';
@@ -140,6 +141,8 @@ export async function writeResultsJson(results: BenchmarkResult[], outPath: stri
     } : {}),
     iterations: r.iterations.map(i => ({
       ttiMs: round(i.ttiMs),
+      ...(i.createMs !== undefined ? { createMs: round(i.createMs) } : {}),
+      ...(i.firstExecMs !== undefined ? { firstExecMs: round(i.firstExecMs) } : {}),
       ...(i.error ? { error: i.error } : {}),
     })),
     summary: {
@@ -171,4 +174,48 @@ export async function writeResultsJson(results: BenchmarkResult[], outPath: stri
 
   fs.writeFileSync(outPath, JSON.stringify(output, null, 2));
   console.log(`Results written to ${outPath}`);
+}
+
+function fmtMs(n: number): string {
+  return Math.round(n).toString().padStart(7);
+}
+
+function statsRow(label: string, values: number[]): string {
+  if (values.length === 0) {
+    const dash = '—'.padStart(7);
+    return `│ ${label.padEnd(14)} │ ${dash} │ ${dash} │ ${dash} │ ${dash} │ ${dash} │`;
+  }
+  const s = computeStats(values);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  return `│ ${label.padEnd(14)} │ ${fmtMs(min)} │ ${fmtMs(s.median)} │ ${fmtMs(s.p95)} │ ${fmtMs(s.p99)} │ ${fmtMs(max)} │`;
+}
+
+/**
+ * Print a per-provider breakdown of create / first-exec / TTI percentiles
+ * for the current mode. One table per provider (one row each for create,
+ * first exec, TTI). Min and max are raw extremes; p50/p95/p99 are computed
+ * by `computeStats` (which trims outliers by 5% on each end).
+ */
+export function printTimingBreakdown(results: BenchmarkResult[]): void {
+  for (const r of results) {
+    if (r.skipped) continue;
+    const total = r.iterations.length;
+    if (total === 0) continue;
+    const successful = r.iterations.filter(i => !i.error);
+    const ok = successful.length;
+    const createMs = successful.map(i => i.createMs).filter((v): v is number => v !== undefined);
+    const firstExecMs = successful.map(i => i.firstExecMs).filter((v): v is number => v !== undefined);
+    const ttiMs = successful.map(i => i.ttiMs);
+
+    console.log('');
+    console.log(`  ${r.provider} timing breakdown — ${ok}/${total} OK`);
+    console.log('  ┌────────────────┬─────────┬─────────┬─────────┬─────────┬─────────┐');
+    console.log('  │ Metric         │ min     │ p50     │ p95     │ p99     │ max     │');
+    console.log('  ├────────────────┼─────────┼─────────┼─────────┼─────────┼─────────┤');
+    console.log(`  ${statsRow('create (ms)', createMs)}`);
+    console.log(`  ${statsRow('first exec (ms)', firstExecMs)}`);
+    console.log(`  ${statsRow('TTI (ms)', ttiMs)}`);
+    console.log('  └────────────────┴─────────┴─────────┴─────────┴─────────┴─────────┘');
+  }
 }

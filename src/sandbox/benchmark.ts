@@ -116,6 +116,7 @@ export async function runIteration(
     const start = performance.now();
 
     sandbox = await withTimeout(compute.sandbox.create(sandboxOptions), timeout, 'Sandbox creation timed out');
+    const createMs = performance.now() - start;
 
     const markerA = '/tmp/.bench_ephemeral_check';
     const markerB = '/var/tmp/.bench_ephemeral_check';
@@ -151,11 +152,13 @@ export async function runIteration(
       `printf '%s' '${probeToken}' > ${markerB}`,
     ].join('; ');
 
+    const firstExecStart = performance.now();
     const identityResult = await withTimeout(
       sandbox.runCommand(identityProbeCommand),
       30_000,
       'Sandbox identity check timed out'
     ) as { exitCode: number; stdout?: string; stderr?: string };
+    const firstExecMs = performance.now() - firstExecStart;
 
     if (identityResult.exitCode !== 0) {
       throw new Error(`Sandbox identity check failed with exit code ${identityResult.exitCode}: ${identityResult.stderr || 'Unknown error'}`);
@@ -190,7 +193,7 @@ export async function runIteration(
 
     const ttiMs = performance.now() - start;
 
-    return { ttiMs };
+    return { ttiMs, createMs, firstExecMs };
   } finally {
     if (sandbox && process.env.DELETE !== 'false') {
       let timer: ReturnType<typeof setTimeout> | undefined;

@@ -9,7 +9,7 @@ import { runConcurrentBenchmark } from './sandbox/concurrent.js';
 import { runStaggeredBenchmark } from './sandbox/staggered.js';
 import { runStorageBenchmark, writeStorageResultsJson } from './storage/benchmark.js';
 import { runBrowserBenchmark, writeBrowserResultsJson } from './browser/benchmark.js';
-import { printResultsTable, writeResultsJson } from './sandbox/table.js';
+import { printResultsTable, printTimingBreakdown, writeResultsJson } from './sandbox/table.js';
 import { providers } from './sandbox/providers.js';
 import { storageProviders } from './storage/providers.js';
 import { browserProviders } from './browser/providers.js';
@@ -103,6 +103,9 @@ async function runMode(mode: BenchmarkMode, toRun: typeof providers): Promise<vo
 
   // Print comparison table
   printResultsTable(results);
+
+  // Print per-provider create/firstExec/TTI breakdown
+  printTimingBreakdown(results);
 
   // Write JSON results to mode-specific subdirectory
   const timestamp = new Date().toISOString().slice(0, 10);
