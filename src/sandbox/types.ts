@@ -22,6 +22,10 @@ export interface TimingResult {
   createMs?: number;
   /** Time for the first `runCommand` call (identity probe — includes any readiness retries) */
   firstExecMs?: number;
+  /** Time for the second `runCommand` call (`node -v`) */
+  secondExecMs?: number;
+  /** Time for `sandbox.destroy()` to complete */
+  destroyMs?: number;
   /** Error message if this iteration failed */
   error?: string;
 }

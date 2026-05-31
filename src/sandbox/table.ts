@@ -143,6 +143,8 @@ export async function writeResultsJson(results: BenchmarkResult[], outPath: stri
       ttiMs: round(i.ttiMs),
       ...(i.createMs !== undefined ? { createMs: round(i.createMs) } : {}),
       ...(i.firstExecMs !== undefined ? { firstExecMs: round(i.firstExecMs) } : {}),
+      ...(i.secondExecMs !== undefined ? { secondExecMs: round(i.secondExecMs) } : {}),
+      ...(i.destroyMs !== undefined ? { destroyMs: round(i.destroyMs) } : {}),
       ...(i.error ? { error: i.error } : {}),
     })),
     summary: {
@@ -183,12 +185,12 @@ function fmtMs(n: number): string {
 function statsRow(label: string, values: number[]): string {
   if (values.length === 0) {
     const dash = '—'.padStart(7);
-    return `│ ${label.padEnd(14)} │ ${dash} │ ${dash} │ ${dash} │ ${dash} │ ${dash} │`;
+    return `│ ${label.padEnd(16)} │ ${dash} │ ${dash} │ ${dash} │ ${dash} │ ${dash} │`;
   }
   const s = computeStats(values);
   const min = Math.min(...values);
   const max = Math.max(...values);
-  return `│ ${label.padEnd(14)} │ ${fmtMs(min)} │ ${fmtMs(s.median)} │ ${fmtMs(s.p95)} │ ${fmtMs(s.p99)} │ ${fmtMs(max)} │`;
+  return `│ ${label.padEnd(16)} │ ${fmtMs(min)} │ ${fmtMs(s.median)} │ ${fmtMs(s.p95)} │ ${fmtMs(s.p99)} │ ${fmtMs(max)} │`;
 }
 
 /**
@@ -206,16 +208,20 @@ export function printTimingBreakdown(results: BenchmarkResult[]): void {
     const ok = successful.length;
     const createMs = successful.map(i => i.createMs).filter((v): v is number => v !== undefined);
     const firstExecMs = successful.map(i => i.firstExecMs).filter((v): v is number => v !== undefined);
+    const secondExecMs = successful.map(i => i.secondExecMs).filter((v): v is number => v !== undefined);
     const ttiMs = successful.map(i => i.ttiMs);
+    const destroyMs = successful.map(i => i.destroyMs).filter((v): v is number => v !== undefined);
 
     console.log('');
     console.log(`  ${r.provider} timing breakdown — ${ok}/${total} OK`);
-    console.log('  ┌────────────────┬─────────┬─────────┬─────────┬─────────┬─────────┐');
-    console.log('  │ Metric         │ min     │ p50     │ p95     │ p99     │ max     │');
-    console.log('  ├────────────────┼─────────┼─────────┼─────────┼─────────┼─────────┤');
+    console.log('  ┌──────────────────┬─────────┬─────────┬─────────┬─────────┬─────────┐');
+    console.log('  │ Metric           │ min     │ p50     │ p95     │ p99     │ max     │');
+    console.log('  ├──────────────────┼─────────┼─────────┼─────────┼─────────┼─────────┤');
     console.log(`  ${statsRow('create (ms)', createMs)}`);
-    console.log(`  ${statsRow('first exec (ms)', firstExecMs)}`);
+    console.log(`  ${statsRow('1st exec (ms)', firstExecMs)}`);
+    console.log(`  ${statsRow('2nd exec (ms)', secondExecMs)}`);
     console.log(`  ${statsRow('TTI (ms)', ttiMs)}`);
-    console.log('  └────────────────┴─────────┴─────────┴─────────┴─────────┴─────────┘');
+    console.log(`  ${statsRow('destroy (ms)', destroyMs)}`);
+    console.log('  └──────────────────┴─────────┴─────────┴─────────┴─────────┴─────────┘');
   }
 }

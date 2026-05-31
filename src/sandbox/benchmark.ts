@@ -111,6 +111,7 @@ export async function runIteration(
   reuseDetector?: ReuseDetector,
 ): Promise<TimingResult> {
   let sandbox: any = null;
+  let iterationResult: TimingResult | undefined;
 
   try {
     const start = performance.now();
@@ -181,11 +182,13 @@ export async function runIteration(
       rememberSignals(identity, reuseDetector);
     }
 
+    const secondExecStart = performance.now();
     const result = await withTimeout(
       sandbox.runCommand('node -v'),
       30_000,
-      'First command execution timed out'
+      'Second command execution timed out'
     ) as { exitCode: number; stderr?: string };
+    const secondExecMs = performance.now() - secondExecStart;
 
     if (result.exitCode !== 0) {
       throw new Error(`Command failed with exit code ${result.exitCode}: ${result.stderr || 'Unknown error'}`);
@@ -193,10 +196,12 @@ export async function runIteration(
 
     const ttiMs = performance.now() - start;
 
-    return { ttiMs, createMs, firstExecMs };
+    iterationResult = { ttiMs, createMs, firstExecMs, secondExecMs };
+    return iterationResult;
   } finally {
     if (sandbox && process.env.DELETE !== 'false') {
       let timer: ReturnType<typeof setTimeout> | undefined;
+      const destroyStart = performance.now();
       try {
         await Promise.race([
           sandbox.destroy(),
@@ -204,6 +209,9 @@ export async function runIteration(
             timer = setTimeout(() => reject(new Error('Destroy timeout')), destroyTimeoutMs);
           }),
         ]);
+        if (iterationResult) {
+          iterationResult.destroyMs = performance.now() - destroyStart;
+        }
       } catch (err) {
         console.warn(`    [cleanup] destroy failed: ${err instanceof Error ? err.message : String(err)}`);
       } finally {
