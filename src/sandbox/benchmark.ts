@@ -1,6 +1,7 @@
 import type { ProviderConfig, BenchmarkResult, TimingResult } from './types.js';
 import { computeStats } from '../util/stats.js';
 import { withTimeout } from '../util/timeout.js';
+import { newTraceparent, runWithTraceparent, type TraceContext } from './traceparent.js';
 import { randomUUID } from 'node:crypto';
 
 export async function runBenchmark(config: ProviderConfig): Promise<BenchmarkResult> {
@@ -29,7 +30,8 @@ export async function runBenchmark(config: ProviderConfig): Promise<BenchmarkRes
   console.log(`\n--- Benchmarking: ${name} (${iterations} iterations) ---`);
 
   for (let i = 0; i < iterations; i++) {
-    console.log(`  Iteration ${i + 1}/${iterations}...`);
+    const trace = newTraceparent();
+    console.log(`  Iteration ${i + 1}/${iterations}...  traceparent: ${trace.traceparent}`);
 
     try {
       const iterationResult = await runIteration(
@@ -38,13 +40,14 @@ export async function runBenchmark(config: ProviderConfig): Promise<BenchmarkRes
         sandboxOptions,
         destroyTimeoutMs,
         reuseDetector,
+        trace,
       );
       results.push(iterationResult);
       console.log(`    TTI: ${(iterationResult.ttiMs / 1000).toFixed(2)}s`);
     } catch (err) {
       const error = err instanceof Error ? err.message : String(err);
       console.log(`    FAILED: ${error}`);
-      results.push({ ttiMs: 0, error });
+      results.push({ ttiMs: 0, error, traceparent: trace.traceparent, traceId: trace.traceId });
     }
   }
 
@@ -109,7 +112,11 @@ export async function runIteration(
   sandboxOptions?: Record<string, any>,
   destroyTimeoutMs: number = 15_000,
   reuseDetector?: ReuseDetector,
+  trace: TraceContext = newTraceparent(),
 ): Promise<TimingResult> {
+  // All js-client HTTP/WS calls made within this scope inherit `trace` via the
+  // http(s).request patch in traceparent.ts → server spans land on this trace.
+  return runWithTraceparent(trace, async () => {
   let sandbox: any = null;
   let iterationResult: TimingResult | undefined;
 
@@ -118,6 +125,9 @@ export async function runIteration(
 
     sandbox = await withTimeout(compute.sandbox.create(sandboxOptions), timeout, 'Sandbox creation timed out');
     const createMs = performance.now() - start;
+
+    const serviceId = (sandbox as any).sandboxId ?? (sandbox as any).serviceId ?? '<unknown>';
+    console.log(`    service: ${serviceId}  traceparent: ${trace.traceparent}`);
 
     const markerA = '/tmp/.bench_ephemeral_check';
     const markerB = '/var/tmp/.bench_ephemeral_check';
@@ -196,7 +206,7 @@ export async function runIteration(
 
     const ttiMs = performance.now() - start;
 
-    iterationResult = { ttiMs, createMs, firstExecMs, secondExecMs };
+    iterationResult = { ttiMs, createMs, firstExecMs, secondExecMs, traceparent: trace.traceparent, traceId: trace.traceId };
     return iterationResult;
   } finally {
     if (sandbox && process.env.DELETE !== 'false') {
@@ -221,4 +231,5 @@ export async function runIteration(
       console.warn(`    [cleanup] DELETE=false → leaking sandbox ${(sandbox as any).sandboxId ?? '<unknown>'}`);
     }
   }
+  });
 }

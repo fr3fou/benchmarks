@@ -26,6 +26,10 @@ export interface TimingResult {
   secondExecMs?: number;
   /** Time for `sandbox.destroy()` to complete */
   destroyMs?: number;
+  /** W3C traceparent header sent on this iteration's HTTP/WS calls */
+  traceparent?: string;
+  /** Trace ID extracted from the traceparent (for Grafana/Tempo lookup) */
+  traceId?: string;
   /** Error message if this iteration failed */
   error?: string;
 }
