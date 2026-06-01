@@ -2,6 +2,12 @@
 import { installTraceparentPropagation } from './sandbox/traceparent.js';
 installTraceparentPropagation();
 
+// Patch http(s).request to give the Northflank API client a keepAlive agent
+// (connection pooling) before the js-client loads. Applies regardless of worker
+// clustering — see keepalive.ts; also installed in the forked tti-worker.
+import { installKeepAliveAgent } from './sandbox/keepalive.js';
+installKeepAliveAgent();
+
 // Load .env before any other imports so env vars are available at module evaluation time
 import './env.js';
 
