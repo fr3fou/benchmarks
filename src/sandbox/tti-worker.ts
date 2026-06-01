@@ -19,8 +19,6 @@
 // before the js-client is first used.
 import { installTraceparentPropagation } from './traceparent.js';
 installTraceparentPropagation();
-import { installKeepAliveAgent } from './keepalive.js';
-installKeepAliveAgent();
 import '../env.js';
 
 import { providers } from './providers.js';

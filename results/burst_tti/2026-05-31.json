@@ -1,0 +1,625 @@
+{
+  "version": "1.1",
+  "timestamp": "2026-05-31T18:17:13.363Z",
+  "environment": {
+    "node": "v22.22.3",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "config": {
+    "iterations": 100,
+    "timeoutMs": 120000
+  },
+  "results": [
+    {
+      "provider": "northflank",
+      "mode": "concurrent",
+      "concurrency": 100,
+      "wallClockMs": 3815.65,
+      "timeToFirstReadyMs": 1789.71,
+      "iterations": [
+        {
+          "ttiMs": 2067.23,
+          "createMs": 736.17,
+          "firstExecMs": 647.67,
+          "secondExecMs": 683.38
+        },
+        {
+          "ttiMs": 2004.38,
+          "createMs": 688.27,
+          "firstExecMs": 653.41,
+          "secondExecMs": 662.67
+        },
+        {
+          "ttiMs": 2012.94,
+          "createMs": 695.89,
+          "firstExecMs": 666.56,
+          "secondExecMs": 650.48
+        },
+        {
+          "ttiMs": 2276.71,
+          "createMs": 702.71,
+          "firstExecMs": 924.53,
+          "secondExecMs": 649.44
+        },
+        {
+          "ttiMs": 2097.89,
+          "createMs": 719.75,
+          "firstExecMs": 690.25,
+          "secondExecMs": 687.87
+        },
+        {
+          "ttiMs": 2202.31,
+          "createMs": 720.3,
+          "firstExecMs": 825.27,
+          "secondExecMs": 656.71
+        },
+        {
+          "ttiMs": 2313.47,
+          "createMs": 666.28,
+          "firstExecMs": 984.02,
+          "secondExecMs": 663.14
+        },
+        {
+          "ttiMs": 2181.81,
+          "createMs": 875.93,
+          "firstExecMs": 650.74,
+          "secondExecMs": 655.09
+        },
+        {
+          "ttiMs": 3434.94,
+          "createMs": 638.11,
+          "firstExecMs": 915.38,
+          "secondExecMs": 1881.42
+        },
+        {
+          "ttiMs": 2713.34,
+          "createMs": 634.94,
+          "firstExecMs": 907.32,
+          "secondExecMs": 1171.06
+        },
+        {
+          "ttiMs": 2087.19,
+          "createMs": 713.28,
+          "firstExecMs": 681.95,
+          "secondExecMs": 691.94
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox identity check failed with exit code -1: Unknown error"
+        },
+        {
+          "ttiMs": 2105.28,
+          "createMs": 663.95,
+          "firstExecMs": 639,
+          "secondExecMs": 802.28
+        },
+        {
+          "ttiMs": 1982.02,
+          "createMs": 657.61,
+          "firstExecMs": 666.31,
+          "secondExecMs": 658.09
+        },
+        {
+          "ttiMs": 2053.66,
+          "createMs": 665.78,
+          "firstExecMs": 637.71,
+          "secondExecMs": 750.14
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox identity check failed with exit code -1: Unknown error"
+        },
+        {
+          "ttiMs": 1957.06,
+          "createMs": 665.68,
+          "firstExecMs": 642.02,
+          "secondExecMs": 649.33
+        },
+        {
+          "ttiMs": 2013.76,
+          "createMs": 684.93,
+          "firstExecMs": 673.69,
+          "secondExecMs": 655.12
+        },
+        {
+          "ttiMs": 1978.77,
+          "createMs": 683.9,
+          "firstExecMs": 652.67,
+          "secondExecMs": 642.16
+        },
+        {
+          "ttiMs": 2591,
+          "createMs": 680.22,
+          "firstExecMs": 1255.18,
+          "secondExecMs": 655.56
+        },
+        {
+          "ttiMs": 2047.63,
+          "createMs": 700.98,
+          "firstExecMs": 682.77,
+          "secondExecMs": 663.86
+        },
+        {
+          "ttiMs": 2527.07,
+          "createMs": 684.1,
+          "firstExecMs": 1187.1,
+          "secondExecMs": 655.82
+        },
+        {
+          "ttiMs": 1981.49,
+          "createMs": 646.52,
+          "firstExecMs": 670.4,
+          "secondExecMs": 664.54
+        },
+        {
+          "ttiMs": 1998.37,
+          "createMs": 646.58,
+          "firstExecMs": 640.25,
+          "secondExecMs": 711.51
+        },
+        {
+          "ttiMs": 1998.81,
+          "createMs": 684.48,
+          "firstExecMs": 667.15,
+          "secondExecMs": 647.17
+        },
+        {
+          "ttiMs": 1921.9,
+          "createMs": 621.03,
+          "firstExecMs": 640.27,
+          "secondExecMs": 660.55
+        },
+        {
+          "ttiMs": 2026.29,
+          "createMs": 689.22,
+          "firstExecMs": 657.82,
+          "secondExecMs": 679.24
+        },
+        {
+          "ttiMs": 2830.25,
+          "createMs": 669.95,
+          "firstExecMs": 1511.78,
+          "secondExecMs": 648.48
+        },
+        {
+          "ttiMs": 1957.95,
+          "createMs": 667.71,
+          "firstExecMs": 637.44,
+          "secondExecMs": 652.78
+        },
+        {
+          "ttiMs": 1972.67,
+          "createMs": 643.1,
+          "firstExecMs": 684.2,
+          "secondExecMs": 645.34
+        },
+        {
+          "ttiMs": 2065.49,
+          "createMs": 695.69,
+          "firstExecMs": 717.61,
+          "secondExecMs": 652.18
+        },
+        {
+          "ttiMs": 2345.51,
+          "createMs": 695.71,
+          "firstExecMs": 978.5,
+          "secondExecMs": 671.21
+        },
+        {
+          "ttiMs": 1937.96,
+          "createMs": 635.59,
+          "firstExecMs": 664.56,
+          "secondExecMs": 637.77
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox identity check failed with exit code -1: Unknown error"
+        },
+        {
+          "ttiMs": 2020.28,
+          "createMs": 667.34,
+          "firstExecMs": 683.53,
+          "secondExecMs": 669.39
+        },
+        {
+          "ttiMs": 2037.67,
+          "createMs": 661.35,
+          "firstExecMs": 722.78,
+          "secondExecMs": 653.53
+        },
+        {
+          "ttiMs": 2004.53,
+          "createMs": 613.28,
+          "firstExecMs": 736.88,
+          "secondExecMs": 654.34
+        },
+        {
+          "ttiMs": 2024.58,
+          "createMs": 680.03,
+          "firstExecMs": 665.92,
+          "secondExecMs": 678.61
+        },
+        {
+          "ttiMs": 1986.48,
+          "createMs": 660.53,
+          "firstExecMs": 648.01,
+          "secondExecMs": 677.92
+        },
+        {
+          "ttiMs": 2026.77,
+          "createMs": 690.11,
+          "firstExecMs": 650.86,
+          "secondExecMs": 685.78
+        },
+        {
+          "ttiMs": 2817.57,
+          "createMs": 687.79,
+          "firstExecMs": 658.67,
+          "secondExecMs": 1471.09
+        },
+        {
+          "ttiMs": 2241.27,
+          "createMs": 660.99,
+          "firstExecMs": 930.01,
+          "secondExecMs": 650.23
+        },
+        {
+          "ttiMs": 2033.72,
+          "createMs": 689.26,
+          "firstExecMs": 688,
+          "secondExecMs": 656.45
+        },
+        {
+          "ttiMs": 1984.57,
+          "createMs": 671.15,
+          "firstExecMs": 646.12,
+          "secondExecMs": 667.28
+        },
+        {
+          "ttiMs": 2205.95,
+          "createMs": 646.92,
+          "firstExecMs": 907.49,
+          "secondExecMs": 651.5
+        },
+        {
+          "ttiMs": 3083.46,
+          "createMs": 637.22,
+          "firstExecMs": 674.28,
+          "secondExecMs": 1771.94
+        },
+        {
+          "ttiMs": 2598.65,
+          "createMs": 680.93,
+          "firstExecMs": 727.89,
+          "secondExecMs": 1189.81
+        },
+        {
+          "ttiMs": 2062.6,
+          "createMs": 691.37,
+          "firstExecMs": 715,
+          "secondExecMs": 656.22
+        },
+        {
+          "ttiMs": 2763.8,
+          "createMs": 666.3,
+          "firstExecMs": 1448.32,
+          "secondExecMs": 649.14
+        },
+        {
+          "ttiMs": 1985.16,
+          "createMs": 649.62,
+          "firstExecMs": 659.72,
+          "secondExecMs": 675.81
+        },
+        {
+          "ttiMs": 2077.13,
+          "createMs": 627.15,
+          "firstExecMs": 781.42,
+          "secondExecMs": 668.54
+        },
+        {
+          "ttiMs": 2332.41,
+          "createMs": 671.72,
+          "firstExecMs": 1023.5,
+          "secondExecMs": 637.13
+        },
+        {
+          "ttiMs": 2040.98,
+          "createMs": 686.79,
+          "firstExecMs": 687.67,
+          "secondExecMs": 666.5
+        },
+        {
+          "ttiMs": 3444.84,
+          "createMs": 661.43,
+          "firstExecMs": 721.21,
+          "secondExecMs": 2062.17
+        },
+        {
+          "ttiMs": 2027.69,
+          "createMs": 660.47,
+          "firstExecMs": 678.72,
+          "secondExecMs": 688.48
+        },
+        {
+          "ttiMs": 2014.56,
+          "createMs": 672.28,
+          "firstExecMs": 661.75,
+          "secondExecMs": 680.52
+        },
+        {
+          "ttiMs": 2009.36,
+          "createMs": 651.13,
+          "firstExecMs": 675.82,
+          "secondExecMs": 682.4
+        },
+        {
+          "ttiMs": 1789.71,
+          "createMs": 497.68,
+          "firstExecMs": 638.62,
+          "secondExecMs": 653.31
+        },
+        {
+          "ttiMs": 2090.05,
+          "createMs": 646.57,
+          "firstExecMs": 789.2,
+          "secondExecMs": 654.26
+        },
+        {
+          "ttiMs": 1961.2,
+          "createMs": 647.36,
+          "firstExecMs": 654.43,
+          "secondExecMs": 659.38
+        },
+        {
+          "ttiMs": 1969.86,
+          "createMs": 660.45,
+          "firstExecMs": 662.97,
+          "secondExecMs": 646.42
+        },
+        {
+          "ttiMs": 2938.21,
+          "createMs": 696.33,
+          "firstExecMs": 1560.09,
+          "secondExecMs": 681.71
+        },
+        {
+          "ttiMs": 2023.12,
+          "createMs": 680.57,
+          "firstExecMs": 693.27,
+          "secondExecMs": 649.27
+        },
+        {
+          "ttiMs": 2046.55,
+          "createMs": 620.76,
+          "firstExecMs": 745.8,
+          "secondExecMs": 679.96
+        },
+        {
+          "ttiMs": 1966.91,
+          "createMs": 642.85,
+          "firstExecMs": 682.65,
+          "secondExecMs": 641.4
+        },
+        {
+          "ttiMs": 2262.55,
+          "createMs": 679.81,
+          "firstExecMs": 934.51,
+          "secondExecMs": 648.2
+        },
+        {
+          "ttiMs": 2000.61,
+          "createMs": 671.47,
+          "firstExecMs": 653.87,
+          "secondExecMs": 675.25
+        },
+        {
+          "ttiMs": 1960.74,
+          "createMs": 633.94,
+          "firstExecMs": 672.81,
+          "secondExecMs": 653.98
+        },
+        {
+          "ttiMs": 2007.91,
+          "createMs": 664.22,
+          "firstExecMs": 673.06,
+          "secondExecMs": 670.62
+        },
+        {
+          "ttiMs": 1924.66,
+          "createMs": 641.06,
+          "firstExecMs": 633.27,
+          "secondExecMs": 650.3
+        },
+        {
+          "ttiMs": 1989.91,
+          "createMs": 666.81,
+          "firstExecMs": 660.23,
+          "secondExecMs": 662.86
+        },
+        {
+          "ttiMs": 2305.58,
+          "createMs": 668.01,
+          "firstExecMs": 987.73,
+          "secondExecMs": 649.8
+        },
+        {
+          "ttiMs": 1905.42,
+          "createMs": 614.98,
+          "firstExecMs": 634.45,
+          "secondExecMs": 655.94
+        },
+        {
+          "ttiMs": 3757.32,
+          "createMs": 654.61,
+          "firstExecMs": 2395.05,
+          "secondExecMs": 707.59
+        },
+        {
+          "ttiMs": 1973.77,
+          "createMs": 501.77,
+          "firstExecMs": 784.07,
+          "secondExecMs": 687.91
+        },
+        {
+          "ttiMs": 2035.63,
+          "createMs": 686.89,
+          "firstExecMs": 669.02,
+          "secondExecMs": 679.7
+        },
+        {
+          "ttiMs": 1928.48,
+          "createMs": 625.17,
+          "firstExecMs": 639.37,
+          "secondExecMs": 663.91
+        },
+        {
+          "ttiMs": 2050.15,
+          "createMs": 669.02,
+          "firstExecMs": 721.66,
+          "secondExecMs": 659.46
+        },
+        {
+          "ttiMs": 2678.35,
+          "createMs": 646.86,
+          "firstExecMs": 1383.58,
+          "secondExecMs": 647.86
+        },
+        {
+          "ttiMs": 2329.18,
+          "createMs": 656.36,
+          "firstExecMs": 1025.46,
+          "secondExecMs": 647.3
+        },
+        {
+          "ttiMs": 3426,
+          "createMs": 669.21,
+          "firstExecMs": 693.8,
+          "secondExecMs": 2062.98
+        },
+        {
+          "ttiMs": 2005.97,
+          "createMs": 664.36,
+          "firstExecMs": 688.31,
+          "secondExecMs": 653.28
+        },
+        {
+          "ttiMs": 2191.68,
+          "createMs": 637.51,
+          "firstExecMs": 901.68,
+          "secondExecMs": 652.47
+        },
+        {
+          "ttiMs": 1980.97,
+          "createMs": 647.88,
+          "firstExecMs": 668.8,
+          "secondExecMs": 664.28
+        },
+        {
+          "ttiMs": 0,
+          "error": "Sandbox identity check failed with exit code -1: Unknown error"
+        },
+        {
+          "ttiMs": 2063.32,
+          "createMs": 627.63,
+          "firstExecMs": 762.35,
+          "secondExecMs": 673.32
+        },
+        {
+          "ttiMs": 2026.25,
+          "createMs": 663.54,
+          "firstExecMs": 661.74,
+          "secondExecMs": 700.95
+        },
+        {
+          "ttiMs": 1904.02,
+          "createMs": 606.76,
+          "firstExecMs": 638.8,
+          "secondExecMs": 658.41
+        },
+        {
+          "ttiMs": 1978.87,
+          "createMs": 633.42,
+          "firstExecMs": 671.6,
+          "secondExecMs": 673.83
+        },
+        {
+          "ttiMs": 2572.34,
+          "createMs": 681.54,
+          "firstExecMs": 1240.49,
+          "secondExecMs": 650.28
+        },
+        {
+          "ttiMs": 3422.86,
+          "createMs": 630.46,
+          "firstExecMs": 805.99,
+          "secondExecMs": 1986.38
+        },
+        {
+          "ttiMs": 2074.01,
+          "createMs": 632.76,
+          "firstExecMs": 710.47,
+          "secondExecMs": 730.77
+        },
+        {
+          "ttiMs": 1928.53,
+          "createMs": 624.93,
+          "firstExecMs": 639.71,
+          "secondExecMs": 663.86
+        },
+        {
+          "ttiMs": 2073.49,
+          "createMs": 666.54,
+          "firstExecMs": 684.05,
+          "secondExecMs": 722.88
+        },
+        {
+          "ttiMs": 2181.55,
+          "createMs": 625.2,
+          "firstExecMs": 907.69,
+          "secondExecMs": 648.63
+        },
+        {
+          "ttiMs": 2007.52,
+          "createMs": 647.85,
+          "firstExecMs": 694.85,
+          "secondExecMs": 664.8
+        },
+        {
+          "ttiMs": 2021,
+          "createMs": 680.7,
+          "firstExecMs": 659.46,
+          "secondExecMs": 680.82
+        },
+        {
+          "ttiMs": 1990.07,
+          "createMs": 653.54,
+          "firstExecMs": 685.4,
+          "secondExecMs": 651.11
+        },
+        {
+          "ttiMs": 2768.03,
+          "createMs": 639.11,
+          "firstExecMs": 950.64,
+          "secondExecMs": 1178.25
+        },
+        {
+          "ttiMs": 2885.17,
+          "createMs": 661.61,
+          "firstExecMs": 1571.32,
+          "secondExecMs": 652.18
+        }
+      ],
+      "summary": {
+        "ttiMs": {
+          "median": 2036.65,
+          "p95": 2830.25,
+          "p99": 3422.86
+        }
+      },
+      "compositeScore": 72.55,
+      "successRate": 0.96
+    }
+  ]
+}
