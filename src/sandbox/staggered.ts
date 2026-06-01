@@ -6,10 +6,17 @@ import { randomUUID } from 'node:crypto';
 interface StaggeredConfig extends ProviderConfig {
   concurrency: number;
   staggerDelayMs: number;
+  /** Delay before this worker's first launch — used to interleave workers so
+   *  the GLOBAL launch cadence stays one-per-(staggerDelayMs/workers). */
+  startOffsetMs?: number;
+  /** Shared across worker processes so reuse markers stay consistent. */
+  runNonce?: string;
+  /** Prefix for per-sandbox log lines (e.g. "[w0] ") when run under workers. */
+  logPrefix?: string;
 }
 
 export async function runStaggeredBenchmark(config: StaggeredConfig): Promise<StaggeredBenchmarkResult> {
-  const { name, concurrency, staggerDelayMs, timeout = 120_000, requiredEnvVars, sandboxOptions, destroyTimeoutMs } = config;
+  const { name, concurrency, staggerDelayMs, timeout = 120_000, requiredEnvVars, sandboxOptions, destroyTimeoutMs, startOffsetMs = 0, logPrefix = '' } = config;
 
   // Check if all required credentials are available
   const missingVars = requiredEnvVars.filter(v => !process.env[v]);
@@ -34,11 +41,17 @@ export async function runStaggeredBenchmark(config: StaggeredConfig): Promise<St
 
   const wallStart = performance.now();
   const reuseDetector = {
-    runNonce: randomUUID(),
+    runNonce: config.runNonce ?? randomUUID(),
     seenSignals: new Map<string, Set<string>>(),
   };
   const promises: Promise<TimingResult>[] = [];
   const rampProfile: { launchedAt: number; readyAt: number; ttiMs: number }[] = [];
+
+  // Interleave offset: stagger this worker's ramp so launchedAt values are
+  // global (relative to the shared ~T0 fork instant), not worker-local.
+  if (startOffsetMs > 0) {
+    await new Promise(resolve => setTimeout(resolve, startOffsetMs));
+  }
 
   for (let i = 0; i < concurrency; i++) {
     const launchedAt = performance.now() - wallStart;
@@ -47,12 +60,12 @@ export async function runStaggeredBenchmark(config: StaggeredConfig): Promise<St
       .then(result => {
         const readyAt = performance.now() - wallStart;
         rampProfile.push({ launchedAt, readyAt, ttiMs: result.ttiMs });
-        console.log(`  Sandbox ${i + 1}/${concurrency}: TTI ${(result.ttiMs / 1000).toFixed(2)}s (launched at +${(launchedAt / 1000).toFixed(2)}s)`);
+        console.log(`${logPrefix}  Sandbox ${i + 1}/${concurrency}: TTI ${(result.ttiMs / 1000).toFixed(2)}s (launched at +${(launchedAt / 1000).toFixed(2)}s)`);
         return result;
       })
       .catch(err => {
         const error = err instanceof Error ? err.message : String(err);
-        console.log(`  Sandbox ${i + 1}/${concurrency}: FAILED — ${error}`);
+        console.log(`${logPrefix}  Sandbox ${i + 1}/${concurrency}: FAILED — ${error}`);
         return { ttiMs: 0, error } as TimingResult;
       });
 

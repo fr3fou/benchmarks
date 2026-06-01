@@ -5,10 +5,14 @@ import { randomUUID } from 'node:crypto';
 
 interface ConcurrentConfig extends ProviderConfig {
   concurrency: number;
+  /** Shared across worker processes so reuse markers stay consistent. */
+  runNonce?: string;
+  /** Prefix for per-sandbox log lines (e.g. "[w0] ") when run under workers. */
+  logPrefix?: string;
 }
 
 export async function runConcurrentBenchmark(config: ConcurrentConfig): Promise<ConcurrentBenchmarkResult> {
-  const { name, concurrency, timeout = 120_000, requiredEnvVars, sandboxOptions, destroyTimeoutMs } = config;
+  const { name, concurrency, timeout = 120_000, requiredEnvVars, sandboxOptions, destroyTimeoutMs, logPrefix = '' } = config;
 
   // Check if all required credentials are available
   const missingVars = requiredEnvVars.filter(v => !process.env[v]);
@@ -31,7 +35,7 @@ export async function runConcurrentBenchmark(config: ConcurrentConfig): Promise<
 
   const wallStart = performance.now();
   const reuseDetector = {
-    runNonce: randomUUID(),
+    runNonce: config.runNonce ?? randomUUID(),
     seenSignals: new Map<string, Set<string>>(),
   };
 
@@ -39,12 +43,12 @@ export async function runConcurrentBenchmark(config: ConcurrentConfig): Promise<
   const promises = Array.from({ length: concurrency }, (_, i) =>
     runIteration(compute, timeout, sandboxOptions, destroyTimeoutMs, reuseDetector)
       .then(result => {
-        console.log(`  Sandbox ${i + 1}/${concurrency}: TTI ${(result.ttiMs / 1000).toFixed(2)}s`);
+        console.log(`${logPrefix}  Sandbox ${i + 1}/${concurrency}: TTI ${(result.ttiMs / 1000).toFixed(2)}s`);
         return result;
       })
       .catch(err => {
         const error = err instanceof Error ? err.message : String(err);
-        console.log(`  Sandbox ${i + 1}/${concurrency}: FAILED — ${error}`);
+        console.log(`${logPrefix}  Sandbox ${i + 1}/${concurrency}: FAILED — ${error}`);
         return { ttiMs: 0, error } as TimingResult;
       })
   );

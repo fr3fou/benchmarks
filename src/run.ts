@@ -11,6 +11,7 @@ import { fileURLToPath } from 'url';
 import { runBenchmark } from './sandbox/benchmark.js';
 import { runConcurrentBenchmark } from './sandbox/concurrent.js';
 import { runStaggeredBenchmark } from './sandbox/staggered.js';
+import { runClusteredBenchmark } from './sandbox/tti-cluster.js';
 import { runStorageBenchmark, writeStorageResultsJson } from './storage/benchmark.js';
 import { runBrowserBenchmark, writeBrowserResultsJson } from './browser/benchmark.js';
 import { printResultsTable, printTimingBreakdown, writeResultsJson } from './sandbox/table.js';
@@ -34,6 +35,7 @@ const rawMode = getArgValue(args, '--mode');
 const concurrency = parseInt(getArgValue(args, '--concurrency') || '100', 10);
 const storageConcurrency = parseInt(getArgValue(args, '--storage-concurrency') || '1', 10);
 const staggerDelay = parseInt(getArgValue(args, '--stagger-delay') || '200', 10);
+const workers = parseInt(getArgValue(args, '--workers') || process.env.BENCH_WORKERS || '1', 10);
 const fileSizeArg = getArgValue(args, '--file-size') || '10MB';
 
 function getArgValue(args: string[], flag: string): string | undefined {
@@ -72,6 +74,9 @@ async function runMode(mode: BenchmarkMode, toRun: typeof providers): Promise<vo
     if (mode === 'staggered') {
       console.log(`  Stagger delay: ${staggerDelay}ms`);
     }
+    if (workers > 1) {
+      console.log(`  Workers: ${workers} processes`);
+    }
   }
   console.log('='.repeat(70));
 
@@ -85,17 +90,17 @@ async function runMode(mode: BenchmarkMode, toRun: typeof providers): Promise<vo
         break;
       }
       case 'staggered': {
-        const result = await runStaggeredBenchmark({
-          ...providerConfig,
-          concurrency,
-          staggerDelayMs: staggerDelay,
-        });
+        const result = workers > 1
+          ? await runClusteredBenchmark('staggered', providerConfig, { concurrency, staggerDelayMs: staggerDelay, workers })
+          : await runStaggeredBenchmark({ ...providerConfig, concurrency, staggerDelayMs: staggerDelay });
         results.push(result);
         break;
       }
       case 'burst':
       case 'concurrent': {
-        const result = await runConcurrentBenchmark({ ...providerConfig, concurrency });
+        const result = workers > 1
+          ? await runClusteredBenchmark('burst', providerConfig, { concurrency, staggerDelayMs: staggerDelay, workers })
+          : await runConcurrentBenchmark({ ...providerConfig, concurrency });
         results.push(result);
         break;
       }
