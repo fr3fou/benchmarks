@@ -77,6 +77,7 @@
     "@computesdk/tigris": "^1.1.1",
     "@computesdk/upstash": "^0.3.0",
     "@computesdk/vercel": "^1.7.22",
+    "@northflank/js-client": "file:vendor/northflank-js-client-0.5.1.tgz",
     "computesdk": "^2.5.4",
     "dotenv": "^17.4.0",
     "playwright-core": "^1.59.1"
