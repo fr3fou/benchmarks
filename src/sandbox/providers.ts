@@ -85,6 +85,18 @@ export const providers: ProviderConfig[] = [
     createCompute: () => northflank({
       token: process.env.NORTHFLANK_TOKEN!,
       projectId: process.env.NORTHFLANK_PROJECT_ID!,
+      ...(process.env.NORTHFLANK_HOST ? { host: process.env.NORTHFLANK_HOST } : {}),
+      deploymentPlan: process.env.NORTHFLANK_DEPLOYMENT_PLAN || 'nf-compute-10',
+      ...(process.env.NORTHFLANK_BUILD_SERVICE_ID
+        ? {
+            internalDeployment: {
+              id: process.env.NORTHFLANK_BUILD_SERVICE_ID,
+              ...(process.env.NORTHFLANK_BUILD_BRANCH ? { branch: process.env.NORTHFLANK_BUILD_BRANCH } : {}),
+              ...(process.env.NORTHFLANK_BUILD_SHA ? { buildSHA: process.env.NORTHFLANK_BUILD_SHA } : {}),
+            },
+          }
+        : {}),
+      ...(process.env.NORTHFLANK_EXTERNAL_IMAGE ? { image: process.env.NORTHFLANK_EXTERNAL_IMAGE } : {}),
       runtime: 'node',
     }),
   },
