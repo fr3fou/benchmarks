@@ -2,6 +2,7 @@ import type { ProviderConfig, TimingResult, StaggeredBenchmarkResult } from './t
 import { runIteration } from './benchmark.js';
 import { computeStats } from '../util/stats.js';
 import { randomUUID } from 'node:crypto';
+import { newTraceparent, runWithTraceparent } from './traceparent.js';
 
 interface StaggeredConfig extends ProviderConfig {
   concurrency: number;
@@ -43,16 +44,19 @@ export async function runStaggeredBenchmark(config: StaggeredConfig): Promise<St
   for (let i = 0; i < concurrency; i++) {
     const launchedAt = performance.now() - wallStart;
 
-    const p = runIteration(compute, timeout, sandboxOptions, destroyTimeoutMs, reuseDetector)
+    const trace = newTraceparent();
+    const p = runWithTraceparent(trace, () =>
+      runIteration(compute, timeout, sandboxOptions, destroyTimeoutMs, reuseDetector)
+    )
       .then(result => {
         const readyAt = performance.now() - wallStart;
         rampProfile.push({ launchedAt, readyAt, ttiMs: result.ttiMs });
-        console.log(`  Sandbox ${i + 1}/${concurrency}: TTI ${(result.ttiMs / 1000).toFixed(2)}s (launched at +${(launchedAt / 1000).toFixed(2)}s)`);
+        console.log(`  Sandbox ${i + 1}/${concurrency}: TTI ${(result.ttiMs / 1000).toFixed(2)}s (launched at +${(launchedAt / 1000).toFixed(2)}s)  traceparent: ${trace.traceparent}`);
         return result;
       })
       .catch(err => {
         const error = err instanceof Error ? err.message : String(err);
-        console.log(`  Sandbox ${i + 1}/${concurrency}: FAILED — ${error}`);
+        console.log(`  Sandbox ${i + 1}/${concurrency}: FAILED — ${error}  traceparent: ${trace.traceparent}`);
         return { ttiMs: 0, error } as TimingResult;
       });
 

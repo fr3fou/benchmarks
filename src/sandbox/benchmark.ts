@@ -2,6 +2,7 @@ import type { ProviderConfig, BenchmarkResult, TimingResult } from './types.js';
 import { computeStats } from '../util/stats.js';
 import { withTimeout } from '../util/timeout.js';
 import { randomUUID } from 'node:crypto';
+import { newTraceparent, runWithTraceparent } from './traceparent.js';
 
 export async function runBenchmark(config: ProviderConfig): Promise<BenchmarkResult> {
   const { name, iterations = 100, timeout = 120_000, requiredEnvVars, sandboxOptions, destroyTimeoutMs } = config;
@@ -29,16 +30,17 @@ export async function runBenchmark(config: ProviderConfig): Promise<BenchmarkRes
   console.log(`\n--- Benchmarking: ${name} (${iterations} iterations) ---`);
 
   for (let i = 0; i < iterations; i++) {
-    console.log(`  Iteration ${i + 1}/${iterations}...`);
+    const trace = newTraceparent();
+    console.log(`  Iteration ${i + 1}/${iterations}...  traceparent: ${trace.traceparent}`);
 
     try {
-      const iterationResult = await runIteration(
+      const iterationResult = await runWithTraceparent(trace, () => runIteration(
         compute,
         timeout,
         sandboxOptions,
         destroyTimeoutMs,
         reuseDetector,
-      );
+      ));
       results.push(iterationResult);
       console.log(`    TTI: ${(iterationResult.ttiMs / 1000).toFixed(2)}s`);
     } catch (err) {

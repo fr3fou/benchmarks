@@ -1,3 +1,7 @@
+// Install W3C traceparent propagation before any HTTP calls
+import { installTraceparentPropagation } from './sandbox/traceparent.js';
+installTraceparentPropagation();
+
 // Load .env before any other imports so env vars are available at module evaluation time
 import './env.js';
 

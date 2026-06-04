@@ -2,6 +2,7 @@ import type { ProviderConfig, TimingResult, ConcurrentBenchmarkResult } from './
 import { runIteration } from './benchmark.js';
 import { computeStats } from '../util/stats.js';
 import { randomUUID } from 'node:crypto';
+import { newTraceparent, runWithTraceparent } from './traceparent.js';
 
 interface ConcurrentConfig extends ProviderConfig {
   concurrency: number;
@@ -36,18 +37,21 @@ export async function runConcurrentBenchmark(config: ConcurrentConfig): Promise<
   };
 
   // Fire all sandbox creations simultaneously — no awaiting between launches
-  const promises = Array.from({ length: concurrency }, (_, i) =>
-    runIteration(compute, timeout, sandboxOptions, destroyTimeoutMs, reuseDetector)
+  const promises = Array.from({ length: concurrency }, (_, i) => {
+    const trace = newTraceparent();
+    return runWithTraceparent(trace, () =>
+      runIteration(compute, timeout, sandboxOptions, destroyTimeoutMs, reuseDetector)
+    )
       .then(result => {
-        console.log(`  Sandbox ${i + 1}/${concurrency}: TTI ${(result.ttiMs / 1000).toFixed(2)}s`);
+        console.log(`  Sandbox ${i + 1}/${concurrency}: TTI ${(result.ttiMs / 1000).toFixed(2)}s  traceparent: ${trace.traceparent}`);
         return result;
       })
       .catch(err => {
         const error = err instanceof Error ? err.message : String(err);
-        console.log(`  Sandbox ${i + 1}/${concurrency}: FAILED — ${error}`);
+        console.log(`  Sandbox ${i + 1}/${concurrency}: FAILED — ${error}  traceparent: ${trace.traceparent}`);
         return { ttiMs: 0, error } as TimingResult;
-      })
-  );
+      });
+  });
 
   const results = await Promise.all(promises);
   const wallClockMs = performance.now() - wallStart;
